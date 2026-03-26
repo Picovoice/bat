@@ -1,0 +1,10 @@
+.idea/
+bat_demo
+bat_demo_realtime
+**/__pycache__/
+.DS_Store
+.build
+Package.resolved
+.swiftpm
+venv
+.venv
