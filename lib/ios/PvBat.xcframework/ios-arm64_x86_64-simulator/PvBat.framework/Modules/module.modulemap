@@ -1,0 +1,7 @@
+framework module PvBat {
+  umbrella header "PvBat.h"
+  header "pv_bat.h"
+  header "picovoice.h"
+  export *
+  module * {export *}
+}
