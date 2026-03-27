@@ -7,8 +7,6 @@ Made in Vancouver, Canada by [Picovoice](https://picovoice.ai)
 Bat is an on-device spoken language understanding engine. Bat is:
 
 - Private; All voice processing runs locally.
-- [Accurate](https://picovoice.ai/docs/benchmark/stt/)
-- [Compact and Computationally-Efficient](https://github.com/Picovoice/speech-to-text-benchmark#rtf)
 - Cross-Platform:
     - Linux (x86_64), macOS (x86_64, arm64), and Windows (x86_64, arm64)
     - Android and iOS
@@ -36,6 +34,8 @@ Signup or Login to [Picovoice Console](https://console.picovoice.ai/) to get you
 
 ### Microphone Demo
 
+The mic demo takes audio input from a microphone and outputs the language detection scores to the terminal.
+
 You need a working microphone connected to your machine for this demo. Run the following in the terminal:
 
 ```console
@@ -45,6 +45,9 @@ bat_demo_mic --access_key ${ACCESS_KEY}
 Replace `${ACCESS_KEY}` with yours obtained from Picovoice Console.
 
 ### File Demo
+
+The file demo takes audio input from a series of `.wav` files and prints the language detection scores to the terminal.
+Each set of scores is tagged with the timestamp in seconds for the corresponding audio file.
 
 Run the following in the terminal:
 

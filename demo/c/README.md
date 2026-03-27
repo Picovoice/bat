@@ -55,10 +55,12 @@ The {PV_RECORDER_PLATFORM} variable will set the compilation flags for the given
 
 #### Mic Demo
 
+The mic demo takes audio input from a microphone and outputs the language detection scores to the terminal.
+
 Running the demo without arguments prints the usage:
 
 ```console
-usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-e ENDPOINT_DURATION] [-y DEVICE] [-d DEVICE_INDEX] [-v VOICE_THRESHOLD]
+usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-e ENDPOINT_DURATION] [-y DEVICE] [-d AUDIO_DEVICE_INDEX] [-v VOICE_THRESHOLD]
 [-i SHOW_INFERENCE_DEVICES]
 [-s SHOW_AUDIO_DEVICES]
 ```
@@ -165,8 +167,13 @@ demo\\c\\build\\bat_demo.exe ^
 
 #### File Demo
 
+The file demo takes audio input from a series of `.wav` files and prints the language detection scores to the terminal.
+Each set of scores is tagged with the timestamp in seconds for the corresponding audio file.
+
+Running the demo without arguments prints the usage:
+
 ```console
-usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-y DEVICE] [-p] [-n] wav_path0 wav_path1 ...
+usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-y DEVICE] [-v VOICE_THRESHOLD] wav_path0 wav_path1 ...
 ```
 
 Run the command corresponding to your platform from the root of the repository. Replace `${ACCESS_KEY}` with yours

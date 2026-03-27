@@ -21,6 +21,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #if defined(_WIN32) || defined(_WIN64)
 
@@ -32,6 +33,8 @@
 #include "pv_recorder.h"
 
 static volatile bool is_interrupted = false;
+
+const char *(*pv_bat_language_to_string_func)(pv_bat_language_t) = NULL;
 
 void interrupt_handler(int _) {
     (void) _;
@@ -98,7 +101,7 @@ void print_error_message(char **message_stack, int32_t message_stack_depth) {
 
 void print_usage(const char *program_name) {
     fprintf(stderr,
-            "Usage : %s -a ACCESS_KEY -l LIBRARY_PATH -m MODEL_PATH [-y DEVICE] [-d DEVICE_INDEX] [-v VOICE_THRESHOLD] \n"
+            "Usage : %s -a ACCESS_KEY -l LIBRARY_PATH -m MODEL_PATH [-y DEVICE] [-d AUDIO_DEVICE_INDEX] [-v VOICE_THRESHOLD] \n"
             "        %s [-i SHOW_INFERENCE_DEVICES]\n"
             "        %s [-s SHOW_AUDIO_DEVICES]\n",
             program_name,
@@ -198,6 +201,69 @@ void print_inference_devices(const char *library_path) {
     }
     pv_bat_free_hardware_devices_func(hardware_devices, num_hardware_devices);
     close_dl(dl_handle);
+}
+
+static void print_scores_bar(pv_bat_language_t language, float score) {
+    const float percentage = score * 100;
+    const int32_t bar_length = (percentage / 10) * 3;
+    const int32_t empty_length = 30 - bar_length;
+
+    char bar[32 * 3];
+    char empty[32];
+    memset(bar, 0, 32 * 3);
+    memset(empty, 0, 32);
+
+    for (int32_t i = 0; i < (bar_length * 3); i+=3) {
+        memcpy(bar + i, "█", 3 * sizeof(char));
+    }
+    for (int32_t i = 0; i < empty_length; i++) {
+        empty[i] = ' ';
+    }
+
+    fprintf(stdout, "%-8s: [%.2f]|%s%s|\n", pv_bat_language_to_string_func(language), score, bar, empty);
+}
+
+static void print_scores(float *scores) {
+    static bool first_print = true;
+    if (!first_print) {
+        const int32_t num_lines = PV_BAT_LANGAUGE_NUM_LANGUAGES + 2;
+        for (int32_t i = 0; i < num_lines; i++) {
+            fprintf(stdout, "\x1b[1A\x1b[2K");
+        }
+    }
+
+    for (int32_t i = 0; i < PV_BAT_LANGAUGE_NUM_LANGUAGES; i++) {
+        print_scores_bar(i, (scores != NULL) ? scores[i] : 0.0);
+    }
+    if (scores != NULL) {
+        fprintf(stdout, "\n");
+    } else {
+        fprintf(stdout, "(no voice detected)\n");
+    }
+    fflush(stdout);
+
+    first_print = false;
+}
+
+static void print_loading_bar(float progress) {
+    const float percentage = progress * 100.0;
+    const int32_t bar_length = (percentage / 10.0f) * 4.6f;
+    const int32_t empty_length = 46 - bar_length;
+
+    char bar[64];
+    char empty[64];
+    memset(bar, 0, 64);
+    memset(empty, 0, 64);
+
+    for (int32_t i = 0; i < bar_length; i++) {
+        bar[i] = '.';
+    }
+    for (int32_t i = 0; i < empty_length; i++) {
+        empty[i] = ' ';
+    }
+
+    fprintf(stdout, "\r[%s%s]", bar, empty);
+    fflush(stdout);
 }
 
 int picovoice_main(int argc, char *argv[]) {
@@ -323,7 +389,7 @@ int picovoice_main(int argc, char *argv[]) {
         exit(1);
     }
 
-    const char *(*pv_bat_language_to_string_func)(pv_bat_language_t) = load_symbol(dl_handle, "pv_bat_language_to_string");
+    pv_bat_language_to_string_func = load_symbol(dl_handle, "pv_bat_language_to_string");
     if (!pv_bat_version_func) {
         print_dl_error("failed to load `pv_bat_language_to_string_func`");
         exit(1);
@@ -408,6 +474,7 @@ int picovoice_main(int argc, char *argv[]) {
     fprintf(stdout, "selected device: %s.\n", selected_device);
 
     fprintf(stdout, "start recording...\n");
+    print_scores(NULL);
     recorder_status = pv_recorder_start(recorder);
     if (recorder_status != PV_RECORDER_STATUS_SUCCESS) {
         fprintf(stderr, "Failed to start device with %s.\n", pv_recorder_status_to_string(recorder_status));
@@ -421,6 +488,16 @@ int picovoice_main(int argc, char *argv[]) {
                 fprintf(stderr, "Failed to read with `%s`.\n", pv_recorder_status_to_string(recorder_status));
                 exit(1);
             }
+            print_loading_bar((float) i / (float) num_recorder_frames);
+
+            if (is_interrupted) {
+                break;
+            }
+        }
+        fprintf(stdout, "\n");
+
+        if (is_interrupted) {
+            break;
         }
 
         float *scores = NULL;
@@ -450,16 +527,7 @@ int picovoice_main(int argc, char *argv[]) {
             exit(1);
         }
 
-        if (scores) {
-            fprintf(stdout, "[");
-            for (int32_t j = 0; j < PV_BAT_LANGAUGE_NUM_LANGUAGES; j++) {
-                fprintf(stdout, "%s: %0.2f, ", pv_bat_language_to_string_func(j), scores[j]);
-            }
-            fprintf(stdout, "]\n");
-            pv_bat_scores_delete_func(scores);
-        } else {
-            fprintf(stdout,"(no voice detected)\n");
-        }
+        print_scores(scores);
     }
 
     recorder_status = pv_recorder_stop(recorder);

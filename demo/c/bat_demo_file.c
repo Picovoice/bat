@@ -385,6 +385,9 @@ int picovoice_main(int argc, char **argv) {
             exit(1);
         }
 
+        fprintf(stdout, "%s\n", argv[i]);
+        int32_t frame_index = 0;
+
         while ((int32_t) drwav_read_pcm_frames_s16(&f, frame_length, pcm) == frame_length) {
             gettimeofday(&before, NULL);
 
@@ -421,18 +424,23 @@ int picovoice_main(int argc, char **argv) {
                     ((double) (after.tv_sec - before.tv_sec)) + (((double) (after.tv_usec - before.tv_usec)) * 1e-6);
             audio_sec += (double) frame_length / (double) pv_sample_rate_func();
 
+            double start_timestamp = (double) frame_index * pv_bat_frame_length_func() / pv_sample_rate_func();
+            double end_timestamp = (double) (frame_index + 1) * pv_bat_frame_length_func() / pv_sample_rate_func();
             if (scores) {
-                fprintf(stdout, "[");
+                fprintf(stdout, "%0.1f -> %0.1f sec: [", start_timestamp, end_timestamp);
                 for (int32_t j = 0; j < PV_BAT_LANGAUGE_NUM_LANGUAGES; j++) {
                     fprintf(stdout, "%s: %0.2f, ", pv_bat_language_to_string_func(j), scores[j]);
                 }
                 fprintf(stdout, "]\n");
                 pv_bat_scores_delete_func(scores);
             } else {
-                fprintf(stdout,"(no voice detected)\n");
+                fprintf(stdout, "%0.1f -> %0.1f sec: (no voice detected)\n", start_timestamp, end_timestamp);
             }
+
+            frame_index++;
         }
 
+        fprintf(stdout, "\n");
         drwav_uninit(&f);
     }
 

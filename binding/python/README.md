@@ -7,8 +7,6 @@ Made in Vancouver, Canada by [Picovoice](https://picovoice.ai)
 Bat is an on-device spoken language understanding engine. Bat is:
 
 - Private; All voice processing runs locally.
-- [Accurate](https://picovoice.ai/docs/benchmark/stt/)
-- [Compact and Computationally-Efficient](https://github.com/Picovoice/speech-to-text-benchmark#rtf)
 - Cross-Platform:
     - Linux (x86_64), macOS (x86_64, arm64), and Windows (x86_64, arm64)
     - Android and iOS
@@ -34,7 +32,7 @@ Signup or Login to [Picovoice Console](https://console.picovoice.ai/) to get you
 
 ## Usage
 
-Create an instance of the engine and transcribe audio:
+Create an instance of the engine and detect the spoken language from an audio stream.
 
 ```python
 import pvbat
@@ -45,9 +43,9 @@ def get_next_audio_frame():
     pass
 
 while True:
-    scores = handle.process(get_next_audio_frame())
-    if scores:
-        print(scores)
+    language_scores = handle.process(get_next_audio_frame())
+    if language_scores:
+        print(language_scores)
 ```
 
 Replace `${ACCESS_KEY}` with yours obtained from [Picovoice Console](https://console.picovoice.ai/). When done be sure

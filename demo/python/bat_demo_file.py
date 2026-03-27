@@ -32,7 +32,7 @@ def main():
         '--wav_paths',
         nargs='+',
         metavar='PATH',
-        help='Absolute paths to `.wav` files to be transcribed')
+        help='Absolute paths to `.wav` files to be processed')
     parser.add_argument(
         '--device',
         help='Device to run inference on (`best`, `cpu:{num_threads}` or `gpu:{gpu_index}`). '
@@ -79,15 +79,26 @@ def main():
                 buffer = f.readframes(f.getnframes())
                 audio = struct.unpack('%dh' % (len(buffer) / struct.calcsize('h')), buffer)
 
+            print(wav_path)
+
             num_frames = len(audio) // bat.frame_length
             transcript = ''
             for i in range(num_frames):
                 frame = audio[i * bat.frame_length:(i + 1) * bat.frame_length]
                 scores = bat.process(frame)
+
+                start_timestamp = float(i * bat.frame_length) / float(bat.sample_rate)
+                end_timestamp = float((i + 1) * bat.frame_length) / float(bat.sample_rate)
                 if scores:
-                    print([f"{k}: {v:.2f}" for k, v in scores.items()])
+                    print(
+                        f"{start_timestamp:0.1f} -> {end_timestamp:0.1f} sec:",
+                        [f"{k}: {v:.2f}" for k, v in scores.items()])
                 else:
-                    print("(no voice detected)")
+                    print(
+                        f"{start_timestamp:0.1f} -> {end_timestamp:0.1f} sec:",
+                        "(no voice detected)")
+
+            print("")
 
     except BatActivationLimitError:
         print('AccessKey has reached its processing limit.')

@@ -67,7 +67,7 @@ PV_API void pv_bat_delete(pv_bat_t *object);
  * `pv_bat_frame_length()`. The incoming audio needs to have a sample rate equal to `pv_sample_rate()` and be
  * 16-bit linearly-encoded. Bat operates on single-channel audio.
  * @param[out] scores Detection score for each supported language. The scores are in the range [0, 1]
- * with 1 being maximum confidence in a perfect match. The index of each scores corresponds to the `pv_bat_language_t` enum value,
+ * with 1 being maximum confidence in a detection. The index of each scores corresponds to the `pv_bat_language_t` enum value,
  * and the length of the array is `PV_BAT_LANGAUGE_NUM_LANGUAGES` elements long.
  * If `NULL` is returned for `scores` and the return status `PV_STATUS_SUCCESS`, Bat did not detect usable voice
  * in the frame. `scores` must be freed using `pv_bat_scores_delete()`.

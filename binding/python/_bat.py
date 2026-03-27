@@ -84,7 +84,7 @@ class BatActivationRefusedError(BatError):
 
 
 class Bat(object):
-    """Python binding for Bat streaming speech-to-text engine."""
+    """Python binding for Bat spoken language understanding engine."""
 
     class PicovoiceStatuses(Enum):
         SUCCESS = 0
@@ -214,7 +214,13 @@ class Bat(object):
         self._free_error_stack_func.restype = None
 
         init_func = library.pv_bat_init
-        init_func.argtypes = [c_char_p, c_char_p, c_char_p, c_float, POINTER(POINTER(self.CBat))]
+        init_func.argtypes = [
+            c_char_p,
+            c_char_p,
+            c_char_p,
+            c_float,
+            POINTER(POINTER(self.CBat)),
+        ]
         init_func.restype = self.PicovoiceStatuses
 
         self._handle = POINTER(self.CBat)()
@@ -264,7 +270,9 @@ class Bat(object):
         """
 
         if len(pcm) != self.frame_length:
-            raise BatInvalidArgumentError()
+            raise BatInvalidArgumentError(
+                f"The length of the pcm audio frame ({len(pcm)}) does " +\
+                f"not match the required frame length ({self.frame_length})")
 
         c_scores = POINTER(c_float)()
         status = self._process_func(
@@ -298,7 +306,7 @@ class Bat(object):
 
     @property
     def sample_rate(self) -> int:
-        """Audio sample rate accepted by `.process`."""
+        """Audio sample rate accepted by `.process()`."""
 
         return self._sample_rate
 

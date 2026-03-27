@@ -10,10 +10,48 @@
 #
 
 import argparse
+import sys
 
 import pvbat
 from pvbat import BatActivationLimitError, create
 from pvrecorder import PvRecorder
+
+
+FIRST_PRINT = True
+
+
+def print_scores_bar(language, score):
+    percentage = score * 100
+    bar_length = int((percentage / 10) * 3)
+    empty_length = 30 - bar_length
+    sys.stdout.write("%-8s: [%.2f]|%s%s|\n" % (language, score, '█' * bar_length, ' ' * empty_length))
+
+
+def print_scores(scores):
+    global FIRST_PRINT
+    if not FIRST_PRINT:
+        num_lines = len(pvbat.Bat.BatLanguages) + 2
+        for _ in range(num_lines):
+            sys.stdout.write("\x1b[1A\x1b[2K")
+
+    for l in pvbat.Bat.BatLanguages:
+        print_scores_bar(l, scores[l] if scores else 0.0)
+    if (scores):
+        sys.stdout.write("\n")
+    else:
+        sys.stdout.write("(no voice detected)\n")
+    sys.stdout.flush()
+
+    FIRST_PRINT = False
+
+
+def print_loading_bar(progress):
+    percentage = progress * 100
+    bar_length = int((percentage / 10) * 4.6)
+    empty_length = 46 - bar_length
+
+    sys.stdout.write("\r[%s%s]" % ('.' * bar_length, ' ' * empty_length))
+    sys.stdout.flush()
 
 
 def main():
@@ -79,18 +117,18 @@ def main():
         recorder = PvRecorder(frame_length=recorder_frame_length, device_index=args.audio_device_index)
         recorder.start()
         print('Listening... (press Ctrl+C to stop)')
+        print_scores(None)
 
         try:
             buffer = list()
             while True:
                 buffer.extend(recorder.read())
+                print_loading_bar(len(buffer) / bat.frame_length)
                 if len(buffer) >= bat.frame_length:
+                    sys.stdout.write("\n")
                     scores = bat.process(buffer)
                     buffer.clear()
-                    if scores:
-                        print([f"{k}: {v:.2f}" for k, v in scores.items()])
-                    else:
-                        print("(no voice detected)")
+                    print_scores(scores)
         finally:
             print()
             recorder.stop()

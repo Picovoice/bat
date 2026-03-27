@@ -31,7 +31,7 @@ def create(
         library_path: Optional[str] = None,
         voice_threshold: float = 0.4) -> Bat:
     """
-    Factory method for Bat speech-to-text engine.
+    Factory method for Bat spoken language understanding engine.
 
     :param access_key: AccessKey obtained from Picovoice Console (https://console.picovoice.ai/)
     :param model_path: Absolute path to the file containing model parameters. If not set it will be set to the default
@@ -45,7 +45,7 @@ def create(
     :param library_path: Absolute path to Bat's dynamic library. If not set it will be set to the default location.
     :param voice_threshold: Sensitivity threshold for detecting voice. The value should be a number within [0, 1].
     A higher threshold increases detection confidence at the cost of potentially missing frames of voice.
-    :return: An instance of Bat speech-to-text engine.
+    :return: An instance of Bat spoken language understanding engine.
     """
 
     if model_path is None:
@@ -68,7 +68,7 @@ def create(
 def available_devices(library_path: Optional[str] = None) -> Sequence[str]:
     """
     Lists all available devices that Bat can use for inference. Each entry in the list can be the `device` argument
-    of `.create` factory method or `Bat` constructor.
+    of `.create()` factory method or `Bat` constructor.
     :param library_path: Absolute path to Bat's dynamic library. If not set it will be set to the default location.
     :return: List of all available devices that Bat can use for inference.
     """
