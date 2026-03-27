@@ -1,0 +1,264 @@
+# C Demo
+
+## Compatibility
+
+- C99-compatible compiler
+
+## Requirements
+
+- [CMake](https://cmake.org/) version 3.13 or higher
+- [MinGW](https://www.mingw-w64.org/) (**Windows Only**)
+
+## AccessKey
+
+Bat requires a valid Picovoice `AccessKey` at initialization. `AccessKey` acts as your credentials when using Bat SDKs.
+You can get your `AccessKey` for free. Make sure to keep your `AccessKey` secret.
+Signup or Login to [Picovoice Console](https://console.picovoice.ai/) to get your `AccessKey`.
+
+## Usage
+
+If using SSH, clone the repository with:
+
+```console
+git clone --recurse-submodules git@github.com:Picovoice/bat.git
+```
+
+If using HTTPS, clone the repository with:
+
+```console
+git clone --recurse-submodules https://github.com/Picovoice/bat.git
+```
+
+### Build Linux/MacOS
+
+Build the demos by running this from the root of the repository:
+
+```console
+cmake -S demo/c/ -B demo/c/build -DPV_RECORDER_PLATFORM={PV_RECORDER_PLATFORM}
+cmake --build demo/c/build
+```
+
+The {PV_RECORDER_PLATFORM} variable will set the compilation flags for the given platform. Exclude this variable to get a list of possible values.
+
+### Build Windows
+
+Build the demo by running this from the root of the repository:
+
+```console
+cmake -S demo/c/ -B demo/c/build -DPV_RECORDER_PLATFORM={PV_RECORDER_PLATFORM} -G "MinGW Makefiles"
+cmake --build demo/c/build
+```
+
+The {PV_RECORDER_PLATFORM} variable will set the compilation flags for the given platform. Exclude this variable to get a list of possible values.
+
+### Run
+
+#### Mic Demo
+
+Running the demo without arguments prints the usage:
+
+```console
+usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-e ENDPOINT_DURATION] [-y DEVICE] [-d DEVICE_INDEX] [-v VOICE_THRESHOLD]
+[-i SHOW_INFERENCE_DEVICES]
+[-s SHOW_AUDIO_DEVICES]
+```
+
+The demo uses the default microphone on your device for recording. See the list of recording devices:
+
+```console
+./demo/c/build/bat_demo_mic -s
+```
+
+Run the command corresponding to your platform from the root of the repository. Replace `${ACCESS_KEY}` with yours
+obtained from [Picovoice Console](https://console.picovoice.ai/). Either remove the `-i ${MIC_INDEX}` portion or replace
+`${MIC_INDEX}` with the microphone index you wish to use.
+
+##### Linux (x86_64)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/linux/x86_64/libpv_bat.so \
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+##### macOS (x86_64)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/mac/x86_64/libpv_bat.dylib \
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+##### macOS (arm64)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/mac/arm64/libpv_bat.dylib \
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+##### Windows
+
+Run using `Command Prompt`.
+
+```console
+demo\\c\\build\\bat_demo.exe ^
+-a ${ACCESS_KEY} ^
+-m lib\\common\\bat_params.pv ^
+-l lib\\windows\\amd64\\libpv_bat.dll ^
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+##### Raspberry Pi 4
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a72/libpv_bat.so \
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+##### Raspberry Pi 4 (64-bit)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a72-aarch64/libpv_bat.so \
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+##### Raspberry Pi 3
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a53/libpv_bat.so \
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+##### Raspberry Pi 3 (64-bit)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a53-aarch64/libpv_bat.so \
+-y ${DEVICE}
+-d ${MIC_INDEX}
+```
+
+#### File Demo
+
+```console
+usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-y DEVICE] [-p] [-n] wav_path0 wav_path1 ...
+```
+
+Run the command corresponding to your platform from the root of the repository. Replace `${ACCESS_KEY}` with yours
+obtained from [Picovoice Console](https://console.picovoice.ai/) and `${WAV_PATH}` with the path to a compatible
+(single-channel, 16 kHz, and 16-bit PCM) WAV file you want to process.
+
+##### Linux (x86_64)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/linux/x86_64/libpv_bat.so \
+-y ${DEVICE}
+${WAV_PATH}
+```
+
+##### macOS (x86_64)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/mac/x86_64/libpv_bat.dylib \
+-y ${DEVICE}
+${WAV_PATH}
+```
+
+##### macOS (arm64)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/mac/arm64/libpv_bat.dylib \
+-y ${DEVICE}
+${WAV_PATH}
+```
+
+##### Windows
+
+Run using `Command Prompt`.
+
+```console
+demo\\c\\build\\bat_demo.exe ^
+-a ${ACCESS_KEY} ^
+-m lib\\common\\bat_params.pv ^
+-l lib\\windows\\amd64\\libpv_bat.dll ^
+-y ${DEVICE}
+${WAV_PATH}
+```
+
+##### Raspberry Pi 4
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a72/libpv_bat.so \
+-y ${DEVICE}
+${WAV_PATH}
+```
+
+##### Raspberry Pi 4 (64-bit)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a72-aarch64/libpv_bat.so \
+-y ${DEVICE}
+${WAV_PATH}
+```
+
+##### Raspberry Pi 3
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a53/libpv_bat.so \
+-y ${DEVICE}
+${WAV_PATH}
+```
+
+##### Raspberry Pi 3 (64-bit)
+
+```console
+./demo/c/build/bat_demo \
+-a ${ACCESS_KEY} \
+-m lib/common/bat_params.pv \
+-l lib/raspberry-pi/cortex-a53-aarch64/libpv_bat.so \
+-y ${DEVICE}
+${WAV_PATH}
+```
