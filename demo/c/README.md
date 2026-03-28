@@ -60,7 +60,7 @@ The mic demo takes audio input from a microphone and outputs the language detect
 Running the demo without arguments prints the usage:
 
 ```console
-usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-e ENDPOINT_DURATION] [-y DEVICE] [-d AUDIO_DEVICE_INDEX] [-v VOICE_THRESHOLD]
+usage: -a ACCESS_KEY -m MODEL_PATH -l LIBRARY_PATH [-e ENDPOINT_DURATION] [-y DEVICE] [-d AUDIO_DEVICE_INDEX] [-v VOICE_THRESHOLD] [-u UPDATE_DURATION]
 [-i SHOW_INFERENCE_DEVICES]
 [-s SHOW_AUDIO_DEVICES]
 ```

@@ -101,7 +101,7 @@ void print_error_message(char **message_stack, int32_t message_stack_depth) {
 
 void print_usage(const char *program_name) {
     fprintf(stderr,
-            "Usage : %s -a ACCESS_KEY -l LIBRARY_PATH -m MODEL_PATH [-y DEVICE] [-d AUDIO_DEVICE_INDEX] [-v VOICE_THRESHOLD] \n"
+            "Usage : %s -a ACCESS_KEY -l LIBRARY_PATH -m MODEL_PATH [-y DEVICE] [-d AUDIO_DEVICE_INDEX] [-v VOICE_THRESHOLD] [-u UPDATE_DURATION] \n"
             "        %s [-i SHOW_INFERENCE_DEVICES]\n"
             "        %s [-s SHOW_AUDIO_DEVICES]\n",
             program_name,
@@ -274,11 +274,12 @@ int picovoice_main(int argc, char *argv[]) {
     const char *library_path = NULL;
     const char *device = "best";
     float voice_threshold = 0.4f;
+    float update_duration = 0.75f;
     int32_t device_index = -1;
     bool show_inference_devices = false;
 
     int opt;
-    while ((opt = getopt(argc, argv, "a:m:l:e:y:pnd:s:i")) != -1) {
+    while ((opt = getopt(argc, argv, "a:m:l:e:y:v:u:d:si")) != -1) {
         switch (opt) {
             case 'a':
                 access_key = optarg;
@@ -294,6 +295,9 @@ int picovoice_main(int argc, char *argv[]) {
                 break;
             case 'v':
                 voice_threshold = atof(optarg);
+                break;
+            case 'u':
+                update_duration = atof(optarg);
                 break;
             case 'd':
                 device_index = (int32_t) strtol(optarg, NULL, 10);
@@ -325,6 +329,11 @@ int picovoice_main(int argc, char *argv[]) {
 
     if (!(access_key && library_path && model_path)) {
         print_usage(argv[0]);
+        exit(1);
+    }
+
+    if (update_duration < 0.5 || update_duration > 2.0) {
+        fprintf(stderr, "`update_duration` should be between 0.5 and 2.0 seconds.\n");
         exit(1);
     }
 
@@ -445,6 +454,8 @@ int picovoice_main(int argc, char *argv[]) {
 
     fprintf(stdout, "Bat V%s\n", pv_bat_version_func());
 
+    const int32_t update_duration_samples = update_duration * pv_sample_rate_func();
+
     const int32_t bat_frame_length = pv_bat_frame_length_func();
     const int32_t recorder_frame_length = 512;
     const int32_t num_recorder_frames = bat_frame_length / recorder_frame_length;
@@ -464,7 +475,8 @@ int picovoice_main(int argc, char *argv[]) {
         exit(1);
     }
 
-    int16_t *pcm = malloc(bat_frame_length * sizeof(int16_t));
+    int32_t num_pcm_samples = 0;
+    int16_t *pcm = malloc((bat_frame_length + recorder_frame_length) * sizeof(int16_t));
     if (!pcm) {
         fprintf(stderr, "Failed to allocate pcm memory.\n");
         exit(1);
@@ -482,52 +494,48 @@ int picovoice_main(int argc, char *argv[]) {
     }
 
     while (!is_interrupted) {
-        for (int32_t i = 0; i < num_recorder_frames; i++) {
-            recorder_status = pv_recorder_read(recorder, pcm + (i * recorder_frame_length));
-            if (recorder_status != PV_RECORDER_STATUS_SUCCESS) {
-                fprintf(stderr, "Failed to read with `%s`.\n", pv_recorder_status_to_string(recorder_status));
-                exit(1);
-            }
-            print_loading_bar((float) i / (float) num_recorder_frames);
-
-            if (is_interrupted) {
-                break;
-            }
-        }
-        fprintf(stdout, "\n");
-
-        if (is_interrupted) {
-            break;
-        }
-
-        float *scores = NULL;
-        status = pv_bat_process_func(bat, pcm, &scores);
-        if (status != PV_STATUS_SUCCESS) {
-            fprintf(
-                stderr,
-                "Failed to process with `%s`",
-                pv_status_to_string_func(status));
-            error_status = pv_get_error_stack_func(&message_stack, &message_stack_depth);
-            if (error_status != PV_STATUS_SUCCESS) {
-                fprintf(
-                        stderr,
-                        ".\nUnable to get Bat error state with '%s'.\n",
-                        pv_status_to_string_func(error_status));
-                exit(1);
-            }
-
-            if (message_stack_depth > 0) {
-                fprintf(stderr, ":\n");
-                print_error_message(message_stack, message_stack_depth);
-            } else {
-                fprintf(stderr, ".\n");
-            }
-
-            pv_free_error_stack_func(message_stack);
+        recorder_status = pv_recorder_read(recorder, pcm + num_pcm_samples);
+        if (recorder_status != PV_RECORDER_STATUS_SUCCESS) {
+            fprintf(stderr, "Failed to read with `%s`.\n", pv_recorder_status_to_string(recorder_status));
             exit(1);
         }
+        num_pcm_samples += recorder_frame_length;
+        print_loading_bar((float) num_pcm_samples / (float) bat_frame_length);
 
-        print_scores(scores);
+        if (num_pcm_samples >= bat_frame_length) {
+            fprintf(stdout, "\n");
+
+            float *scores = NULL;
+            status = pv_bat_process_func(bat, pcm, &scores);
+            if (status != PV_STATUS_SUCCESS) {
+                fprintf(
+                    stderr,
+                    "Failed to process with `%s`",
+                    pv_status_to_string_func(status));
+                error_status = pv_get_error_stack_func(&message_stack, &message_stack_depth);
+                if (error_status != PV_STATUS_SUCCESS) {
+                    fprintf(
+                            stderr,
+                            ".\nUnable to get Bat error state with '%s'.\n",
+                            pv_status_to_string_func(error_status));
+                    exit(1);
+                }
+
+                if (message_stack_depth > 0) {
+                    fprintf(stderr, ":\n");
+                    print_error_message(message_stack, message_stack_depth);
+                } else {
+                    fprintf(stderr, ".\n");
+                }
+
+                pv_free_error_stack_func(message_stack);
+                exit(1);
+            }
+
+            print_scores(scores);
+            memmove(pcm, pcm + update_duration_samples, (num_pcm_samples - update_duration_samples) * sizeof(int16_t));
+            num_pcm_samples -= update_duration_samples;
+        }
     }
 
     recorder_status = pv_recorder_stop(recorder);

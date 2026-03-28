@@ -70,9 +70,9 @@ class BatCTestCase(unittest.TestCase):
         self.assertEqual(stderr.decode('utf-8'), '')
 
         c_scores = list()
-        scores_lines = stdout.decode('utf-8').strip().split('\n')[3:-1]
+        scores_lines = stdout.decode('utf-8').strip().split('\n')[4:-2]
         for scores in scores_lines:
-            cleaned = scores.strip("[]").strip().strip(",")
+            cleaned = scores.split("sec: ")[1].strip("[]").strip().strip(",")
             c_scores.append([float(x.split(": ")[1]) for x in cleaned.split(", ")])
         test_scores = c_scores[0]
         for x in range(1, len(c_scores)):

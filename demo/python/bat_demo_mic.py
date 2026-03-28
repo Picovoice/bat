@@ -76,6 +76,11 @@ def main():
              "If not set 0.4 will be used.",
         type=float,
         default=0.4)
+    parser.add_argument(
+        '--update_duration',
+        help="Step size for calling Bat process in seconds. Value should be between 0.5 and 2.0 seconds.",
+        type=float,
+        default=0.75)
     parser.add_argument('--audio_device_index', type=int, default=-1, help='Index of input audio device')
     parser.add_argument('--show_audio_devices', action='store_true', help='Only list available devices and exit')
     parser.add_argument(
@@ -98,6 +103,9 @@ def main():
         print('--access_key is required.')
         return
 
+    if not 0.5 <= args.update_duration <= 2.0:
+        raise ValueError(f"update_duration should be between 0.5 and 2.0 seconds.")
+
     bat = create(
         access_key=args.access_key,
         library_path=args.library_path,
@@ -107,6 +115,8 @@ def main():
 
     try:
         print('Bat version : %s' % bat.version)
+
+        update_duration_samples = int(args.update_duration * bat.sample_rate)
 
         recorder_frame_length = 512
         if bat.frame_length % recorder_frame_length != 0:
@@ -126,9 +136,10 @@ def main():
                 print_loading_bar(len(buffer) / bat.frame_length)
                 if len(buffer) >= bat.frame_length:
                     sys.stdout.write("\n")
-                    scores = bat.process(buffer)
-                    buffer.clear()
+                    scores = bat.process(buffer[:bat.frame_length])
                     print_scores(scores)
+                    buffer = buffer[update_duration_samples:]
+
         finally:
             print()
             recorder.stop()
