@@ -106,6 +106,22 @@ library under [lib](/lib), and `${MODEL_PATH}` to path to [default model file](.
 
 #### Vanilla JavaScript and HTML
 
+From [demo/web](./demo/web) run the following in the terminal:
+
+```console
+yarn
+yarn start
+```
+
+(or)
+
+```console
+npm install
+npm run start
+```
+
+Open `http://localhost:5000` in your browser to try the demo.
+
 ## SDKs
 
 ### Python
@@ -180,6 +196,49 @@ resources acquired using `pv_bat_delete(handle)`.
 ### Web
 
 #### Vanilla JavaScript and HTML (ES Modules)
+
+Install the web SDK using yarn:
+
+```console
+yarn add @picovoice/bat-web
+```
+
+or using npm:
+
+```console
+npm install --save @picovoice/bat-web
+```
+
+Create an instance of the engine using `BatWorker` and process an audio file:
+
+```typescript
+import { BatWorker } from "@picovoice/bat-web";
+import batParams from "${PATH_TO_BASE64_BAT_PARAMS}";
+
+function scoresCallback(scores: BatScores | null) {
+  if (scores !== null) {
+    // take action based on scores
+  }
+}
+
+function getAudioData(): Int16Array {
+  // ... function to get audio data
+  return new Int16Array();
+}
+
+const bat = await BatWorker.create(
+  "${ACCESS_KEY}",
+  scoresCallback,
+  { base64: batParams }
+);
+
+for (;;) {
+  bat.process(getAudioData());
+  // break on some condition
+}
+```
+
+Replace `${ACCESS_KEY}` with yours obtained from [Picovoice Console](https://console.picovoice.ai/). Finally, when done release the resources using `bat.release()`.
 
 ## Releases
 
