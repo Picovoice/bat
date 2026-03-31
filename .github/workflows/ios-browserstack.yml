@@ -1,0 +1,78 @@
+name: iOS BrowserStack Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+      - 'binding/ios/BatAppTest/**'
+      - '.github/workflows/ios-browserstack.yml'
+  pull_request:
+    branches: [ master, 'v[0-9]+.[0-9]+' ]
+    paths:
+      - 'binding/ios/BatAppTest/**'
+      - '.github/workflows/ios-browserstack.yml'
+
+defaults:
+  run:
+    working-directory: binding/ios/BatAppTest
+
+jobs:
+  build:
+    name: Run iOS Tests on BrowserStack
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Installing Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run:
+          pip3 install requests
+
+      - name: Make build dir
+        run: mkdir ddp
+
+      - name: Copy test_resources
+        run: ./copy_test_resources.sh
+
+      - name: Inject AccessKey
+        run: sed -i '.bak' 's:{TESTING_ACCESS_KEY_HERE}:${{secrets.PV_VALID_ACCESS_KEY}}:'
+          BatAppTestUITests/BatAppTestUITests.swift
+
+      - name: Inject Device
+        run: sed -i '.bak' 's:{TESTING_DEVICE_HERE}:cpu\:1:'
+          BatAppTestUITests/BatAppTestUITests.swift
+
+      - name: XCode Build
+        run: xcrun xcodebuild build-for-testing
+          -configuration Debug
+          -project BatAppTest.xcodeproj
+          -sdk iphoneos
+          -scheme BatAppTest
+          -derivedDataPath ddp
+          CODE_SIGNING_ALLOWED=NO
+
+      - name: Generating ipa
+        run: cd ddp/Build/Products/Debug-iphoneos/ &&
+          mkdir Payload &&
+          cp -r BatAppTest.app Payload &&
+          zip --symlinks -r BatAppTest.ipa Payload &&
+          rm -r Payload
+
+      - name: Zipping Tests
+        run: cd ddp/Build/Products/Debug-iphoneos/ &&
+          zip --symlinks -r BatAppTestUITests.zip BatAppTestUITests-Runner.app
+
+      - name: Run tests on BrowserStack
+        run: python3 ../../../script/automation/browserstack.py
+          --type xcuitest
+          --username "${{secrets.BROWSERSTACK_USERNAME}}"
+          --access_key "${{secrets.BROWSERSTACK_ACCESS_KEY}}"
+          --project_name "Bat-iOS"
+          --devices "ios-min-max"
+          --app_path "ddp/Build/Products/Debug-iphoneos/BatAppTest.ipa"
+          --test_path "ddp/Build/Products/Debug-iphoneos/BatAppTestUITests.zip"

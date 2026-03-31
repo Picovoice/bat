@@ -102,6 +102,16 @@ library under [lib](/lib), and `${MODEL_PATH}` to path to [default model file](.
 
 ### iOS Demos
 
+To run the demo, go to [demo/ios/BatDemo](./demo/ios/BatDemo) and run:
+
+```console
+pod install
+```
+
+Replace `let accessKey = "${YOUR_ACCESS_KEY_HERE}"` in the file [ViewModel.swift](./demo/ios/BatDemo/BatDemo/ViewModel.swift) with your `AccessKey`.
+
+Then, using [Xcode](https://developer.apple.com/xcode/), open the generated `BatDemo.xcworkspace` and run the application.
+
 ### Web Demos
 
 #### Vanilla JavaScript and HTML
@@ -174,6 +184,40 @@ Replace `${ACCESS_KEY}` with yours obtained from Picovoice Console and `${MODEL_
 resources acquired using `pv_bat_delete(handle)`.
 
 ### iOS
+
+<!-- markdown-link-check-disable -->
+The Bat iOS binding is available via [CocoaPods](https://cocoapods.org/pods/Bat-iOS). To import it into your iOS project, add the following line to your Podfile and run `pod install`:
+<!-- markdown-link-check-enable -->
+```ruby
+pod 'Bat-iOS'
+```
+
+Create an instance of the engine and transcribe audio in real-time:
+
+```swift
+import Bat
+
+let bat = Bat(accessKey: "${ACCESS_KEY}")
+
+func getNextAudioFrame() -> [Int16] {
+  // .. get audioFrame
+  return audioFrame;
+}
+
+while true {
+  do {
+    let languageScores = try bat.process(getNextAudioFrame())
+    if languageScores != nil {
+      // do something with languageScores
+    }
+  } catch let error as BatError {
+      // handle error
+  } catch { }
+}
+
+```
+
+Replace `${ACCESS_KEY}` with yours obtained from Picovoice Console.
 
 ### Android
 
