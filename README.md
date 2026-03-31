@@ -55,7 +55,7 @@ AccessKey also verifies that your usage is within the limits of your account. Yo
 
 ## Language Support
 
-- Bat Streaming spoken language understanding currently supports English, French, Spanish, Italian, German, Portuguese, Japanese, and Korean.
+- Bat spoken language understanding currently supports English, French, Spanish, Italian, German, Portuguese, Japanese, and Korean.
 
 ## Demos
 
