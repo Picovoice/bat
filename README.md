@@ -61,7 +61,44 @@ AccessKey also verifies that your usage is within the limits of your account. Yo
 
 ### Python Demos
 
+Install the demo package:
+
+```console
+pip3 install pvbatdemo
+```
+
+```console
+bat_demo_mic --access_key ${ACCESS_KEY}
+```
+
 ### C Demos
+
+If using SSH, clone the repository with:
+
+```console
+git clone --recurse-submodules git@github.com:Picovoice/bat.git
+```
+
+If using HTTPS, clone the repository with:
+
+```console
+git clone --recurse-submodules https://github.com/Picovoice/bat.git
+```
+
+Build the demo:
+
+```console
+cmake -S demo/c/ -B demo/c/build && cmake --build demo/c/build
+```
+
+Run the demo:
+
+```console
+./demo/c/build/bat_demo_mic -a ${ACCESS_KEY} -m ${MODEL_PATH} -l ${LIBRARY_PATH}
+```
+
+Replace `${ACCESS_KEY}` with yours obtained from Picovoice Console, `${LIBRARY_PATH}` with the path to appropriate
+library under [lib](/lib), and `${MODEL_PATH}` to path to [default model file](./lib/common/bat_params.pv).
 
 ### iOS Demos
 
@@ -73,7 +110,68 @@ AccessKey also verifies that your usage is within the limits of your account. Yo
 
 ### Python
 
+Install the Python SDK:
+
+```console
+pip3 install pvbat
+```
+
+Create an instance of the engine and detect spoken language:
+
+```python
+import pvbat
+
+handle = pvbat.create(access_key='${ACCESS_KEY}')
+
+def get_next_audio_frame():
+    pass
+
+while True:
+    language_scores = handle.process(get_next_audio_frame())
+    if language_scores:
+        print(language_scores)
+```
+
 ### C
+
+Create an instance of the engine and detect spoken language:
+
+```c
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "pv_bat.h"
+
+pv_bat_t *handle = NULL;
+const pv_status_t status = pv_bat_init("${ACCESS_KEY}", "${MODEL_PATH}", "${DEVICE}", 0.4f, &handle);
+if (status != PV_STATUS_SUCCESS) {
+    // error handling logic
+}
+
+extern const int16_t *get_next_audio_frame(void);
+
+while (true) {
+    float *language_scores = NULL;
+    const pv_status_t status = pv_bat_process(
+            handle,
+            get_next_audio_frame(),
+            &language_scores);
+    if (status != PV_STATUS_SUCCESS) {
+        // error handling logic
+    }
+
+    if (language_scores != NULL) {
+        // do something with language_scores
+    }
+
+    pv_bat_scores_delete(language_scores);
+}
+```
+
+Replace `${ACCESS_KEY}` with yours obtained from Picovoice Console and `${MODEL_PATH}` to path to
+[default model file](./lib/common/bat_params.pv). Finally, when done be sure to release
+resources acquired using `pv_bat_delete(handle)`.
 
 ### iOS
 
