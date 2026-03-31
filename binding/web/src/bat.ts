@@ -43,10 +43,10 @@ type pv_bat_init_type = (
   modelPath: number,
   device: number,
   voiceThreshold: number,
-  object: number) => number;
-type pv_bat_process_type = (object: number, pcm: number, scores: number) => number;
+  object: number) => Promise<number>;
+type pv_bat_process_type = (object: number, pcm: number, scores: number) => Promise<number>;
 type pv_bat_scores_delete_type = (scores: number) => void;
-type pv_bat_delete_type = (object: number) => void;
+type pv_bat_delete_type = (object: number) => Promise<void>;
 type pv_bat_frame_length_type = () => number;
 type pv_sample_rate_type = () => number;
 type pv_bat_version_type = () => number;
@@ -469,11 +469,6 @@ export class Bat {
       "pv_bat_process",
       3);
 
-    const scoresAddressAddress = module._malloc(Int32Array.BYTES_PER_ELEMENT);
-    if (scoresAddressAddress === 0) {
-      throw new BatErrors.BatOutOfMemoryError('malloc failed: Cannot allocate memory');
-    }
-
     const objectAddressAddress = module._malloc(Int32Array.BYTES_PER_ELEMENT);
     if (objectAddressAddress === 0) {
       throw new BatErrors.BatOutOfMemoryError('malloc failed: Cannot allocate memory');
@@ -565,6 +560,11 @@ export class Bat {
 
     const inputBufferAddress = module._malloc(frameLength * Int16Array.BYTES_PER_ELEMENT);
     if (inputBufferAddress === 0) {
+      throw new BatErrors.BatOutOfMemoryError('malloc failed: Cannot allocate memory');
+    }
+
+    const scoresAddressAddress = module._malloc(Int32Array.BYTES_PER_ELEMENT);
+    if (scoresAddressAddress === 0) {
       throw new BatErrors.BatOutOfMemoryError('malloc failed: Cannot allocate memory');
     }
 

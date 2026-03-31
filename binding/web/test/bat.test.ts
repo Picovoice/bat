@@ -251,16 +251,16 @@ describe("Bat Binding", function () {
         it(`should be able to process (${testParam.audio_file}) (${instanceString})`, () => cy.getFramesFromFile(
           `audio_samples/${testParam.audio_file}`).then(
           (pcm: Int16Array) => runProcTest(
-              instance,
-              pcm,
-              testParam.voice_threshold,
-              testParam.expected_scores,
-              {
-                model: {
-                  publicPath: `/test/${modelFile}`,
-                  forceWrite: true,
-                },
-              }
+            instance,
+            pcm,
+            testParam.voice_threshold,
+            testParam.expected_scores,
+            {
+              model: {
+                publicPath: `/test/${modelFile}`,
+                forceWrite: true,
+              },
+            }
           )
         ));
       }
