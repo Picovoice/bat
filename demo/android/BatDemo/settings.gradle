@@ -1,0 +1,2 @@
+rootProject.name = "BatDemo"
+include ':bat-demo-app'

@@ -32,7 +32,7 @@ Bat is an on-device spoken language understanding engine. Bat is:
         - [Python](#python-demos)
         - [C](#c-demos)
         - [iOS](#ios-demos)
-        - [Android](#android-demo)
+        - [Android](#android-demos)
         - [Web](#web-demos)
           - [Vanilla JavaScript and HTML](#vanilla-javascript-and-html)
     - [SDKs](#sdks)
@@ -111,6 +111,12 @@ pod install
 Replace `let accessKey = "${YOUR_ACCESS_KEY_HERE}"` in the file [ViewModel.swift](./demo/ios/BatDemo/BatDemo/ViewModel.swift) with your `AccessKey`.
 
 Then, using [Xcode](https://developer.apple.com/xcode/), open the generated `BatDemo.xcworkspace` and run the application.
+
+### Android Demos
+
+Using Android Studio, open [demo/android/BatDemo](./demo/android/BatDemo) as an Android project and then run the application.
+
+Replace `"${YOUR_ACCESS_KEY_HERE}"` in the file [MainActivity.java](./demo/android/BatDemo/bat-demo-app/src/main/java/ai/picovoice/batdemo/MainActivity.java) with your `AccessKey`.
 
 ### Web Demos
 
@@ -236,6 +242,41 @@ while true {
 Replace `${ACCESS_KEY}` with yours obtained from Picovoice Console.
 
 ### Android
+
+To include the package in your Android project, ensure you have included `mavenCentral()` in your top-level `build.gradle` file and then add the following to your app's `build.gradle`:
+
+```groovy
+dependencies {
+    implementation 'ai.picovoice:bat-android:${LATEST_VERSION}'
+}
+```
+
+Create an instance of the engine and detect spoken language:
+
+```java
+import ai.picovoice.bat.*;
+
+final String accessKey = "${ACCESS_KEY}"; // AccessKey obtained from Picovoice Console (https://console.picovoice.ai/)
+
+short[] getNextAudioFrame() {
+    // .. get audioFrame
+    return audioFrame;
+}
+
+try {
+    Bat bat = new Bat.Builder().setAccessKey(accessKey).build(appContext);
+
+    while true {
+        HashMap<BatLanguages, Float> languageScores = bat.process(getNextAudioFrame());
+        if (languageScores != null) {
+            // take action based on languageScores
+        }
+    };
+
+} catch (BatException ex) { }
+```
+
+Replace `${ACCESS_KEY}` with yours obtained from Picovoice Console.
 
 ### Web
 
