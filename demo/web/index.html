@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="node_modules/@picovoice/web-voice-processor/dist/iife/index.js"></script>
+    <script src="node_modules/@picovoice/bat-web/dist/iife/index.js"></script>
+    <script>
+      const script = document.createElement('script');
+      script.src = 'models/batModel.js?t=' + Date.now();
+      document.head.appendChild(script);
+    </script>
+    <script src="scripts/bat.js"></script>
+  </head>
+  <body>
+    <h1>Bat Web Demo</h1>
+    <p>This demo uses Bat for Web and the WebVoiceProcessor to:</p>
+    <ol>
+      <li>
+        Create an instance of Bat with the model file provided or default
+        model file.
+      </li>
+      <li>
+        Acquire microphone (& ask permission) data stream and convert to voice
+        processing format (16kHz 16-bit linear PCM). The downsampled audio is
+        forwarded to the Bat engine. The audio <i>does not</i> leave the
+        browser: all processing is occurring via the Bat WebAssembly code.
+      </li>
+      <li>
+        Listen for real time transcription results from the Bat engines and
+        output them to the page.
+      </li>
+    </ol>
+    After entering the AccessKey, click the "Start Bat" button.
+    <hr />
+    <label for="accessKey"
+      >AccessKey obtained from
+      <a href="https://console.picovoice.ai/">Picovoice Console</a>:</label
+    >
+    <input type="text" id="accessKey" name="accessKey" />
+    <input
+      type="button"
+      id="submit"
+      value="Start Bat"
+      onclick="startBat(document.getElementById('accessKey').value)"
+    />
+    <hr />
+    <div id="status" style="white-space: pre"></div>
+    <br />
+    <div id="result"></div>
+  </body>
+</html>
