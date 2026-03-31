@@ -1,5 +1,26 @@
 let bat = null;
 
+const frameLengthSeconds = 0.75
+var pcmBuffer = new Int16Array();
+
+const pcmBufferEngine = {
+  onmessage: function(e) {
+    switch (e.data.command) {
+        case 'process':
+            var tempPcmBuffer = new Int16Array(pcmBuffer.length + e.data.inputFrame.length);
+            tempPcmBuffer.set(pcmBuffer);
+            tempPcmBuffer.set(e.data.inputFrame, pcmBuffer.length);
+            pcmBuffer = tempPcmBuffer
+
+            if (pcmBuffer.length >= bat.frameLength) {
+              bat.process(pcmBuffer.slice(0, bat.frameLength));
+              pcmBuffer = pcmBuffer.slice(bat.frameLength)
+            }
+            break;
+    }
+  }
+}
+
 function writeMessage(message) {
   console.log(message);
   document.getElementById("status").innerHTML = message;
@@ -38,8 +59,8 @@ async function startBat(accessKey) {
     writeMessage(
       "WebVoiceProcessor initializing. Microphone permissions requested ...",
     );
-    window.WebVoiceProcessor.WebVoiceProcessor.setOptions({frameLength: bat.frameLength})
-    await window.WebVoiceProcessor.WebVoiceProcessor.subscribe(bat);
+    window.WebVoiceProcessor.WebVoiceProcessor.setOptions({frameLength: Math.floor(frameLengthSeconds * bat.sampleRate)})
+    await window.WebVoiceProcessor.WebVoiceProcessor.subscribe(pcmBufferEngine);
     writeMessage("WebVoiceProcessor ready and listening!");
   } catch (err) {
     batErrorCallback(err);
