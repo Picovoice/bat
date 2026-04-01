@@ -65,7 +65,7 @@ Signup or Login to [Picovoice Console](https://console.picovoice.ai/) to get you
 
 ### Usage
 
-Create a model in [Picovoice Console](https://console.picovoice.ai/) or use the [default model](https://github.com/Picovoice/bat/tree/master/lib/common).
+Use the [default model](https://github.com/Picovoice/bat/tree/main/lib/common).
 
 For the web packages, there are two methods to initialize Bat.
 
@@ -199,4 +199,4 @@ await handle.terminate();
 
 ## Demo
 
-For example usage refer to our [Web demo application](https://github.com/Picovoice/bat/tree/master/demo/web).
+For example usage refer to our [Web demo application](https://github.com/Picovoice/bat/tree/main/demo/web).

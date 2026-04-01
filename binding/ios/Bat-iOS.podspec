@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
       - iOS
       - Raspberry Pi (3, 4, 5)
   DESC
-  s.homepage = 'https://github.com/Picovoice/bat/tree/master/binding/ios'
+  s.homepage = 'https://github.com/Picovoice/bat/tree/main/binding/ios'
   s.author = { 'Picovoice' => 'hello@picovoice.ai' }
   s.source = { :git => "https://github.com/Picovoice/bat.git", :tag => s.version.to_s }
   s.ios.deployment_target = '16.0'
