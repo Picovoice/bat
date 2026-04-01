@@ -38,7 +38,7 @@ public class Bat {
     }()
 
 #endif
-    
+
     private var handle: OpaquePointer?
 
     /// The number of audio samples per frame.
@@ -166,7 +166,7 @@ public class Bat {
     ///            with 1 being maximum confidence in a detection. The index of each scores corresponds
     ///            to the `BatLanguage` enum value, and the length of the array is `BatLanguage.numLanguages()`
     ///            elements long. If `nil` is returned, Bat did not detect usable voice in the frame.
-    public func process(_ pcm: [Int16]) throws -> [BatLanguage:Float32]? {
+    public func process(_ pcm: [Int16]) throws -> [BatLanguage: Float32]? {
         if handle == nil {
             throw BatInvalidStateError("Bat must be initialized before processing")
         }
@@ -185,13 +185,13 @@ public class Bat {
         }
 
         if cScores != nil {
-            var scores: [BatLanguage:Float32] = [:]
+            var scores: [BatLanguage: Float32] = [:]
             for i in 0..<BatLanguage.numLanguages() {
                 let language = BatLanguage(rawValue: Int(i)) ?? BatLanguage.UNKNOWN
                 scores[language] = cScores![Int(i)]
             }
-            pv_bat_scores_delete(cScores);
-            return scores;
+            pv_bat_scores_delete(cScores)
+            return scores
         }
         return nil
     }

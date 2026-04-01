@@ -28,13 +28,13 @@ class ViewModel: ObservableObject {
 
     private var isListening = false
     private var autoScroll = true
-    
-    private let voiceProcessorFrameLengthSecs: Float = 0.75;
-    private var pcmBuffer: Array<Int16> = Array()
+
+    private let voiceProcessorFrameLengthSecs: Float = 0.75
+    private var pcmBuffer: [Int16] = Array()
 
     @Published var errorMessage = ""
     @Published var state = UIState.INIT
-    @Published var scoresResult: [String:Float32] = Dictionary()
+    @Published var scoresResult: [String: Float32] = Dictionary()
     @Published var scoresMessage = ""
 
     init() {
@@ -110,8 +110,8 @@ class ViewModel: ObservableObject {
                 return
             }
 
-            let voiceProcessorFrameLength = UInt32(voiceProcessorFrameLengthSecs * Float(Bat.sampleRate));
-            
+            let voiceProcessorFrameLength = UInt32(voiceProcessorFrameLengthSecs * Float(Bat.sampleRate))
+
             try VoiceProcessor.instance.start(
                     frameLength: voiceProcessorFrameLength,
                     sampleRate: Bat.sampleRate
@@ -121,7 +121,7 @@ class ViewModel: ObservableObject {
                 scoresResult[language.toString()] = 0.0
             }
             scoresMessage = ""
-            
+
             state = UIState.RECORDING
             isListening = true
         } catch {
@@ -144,7 +144,7 @@ class ViewModel: ObservableObject {
 
         do {
             pcmBuffer.append(contentsOf: frame)
-            
+
             if pcmBuffer.count >= Bat.frameLength {
                 let scores = try bat.process(Array(pcmBuffer[0..<Int(Bat.frameLength)]))
                 if scores != nil {

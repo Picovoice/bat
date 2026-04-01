@@ -70,7 +70,7 @@ extension BatLanguage {
         case "pt":
             return BatLanguage.PT
         default:
-            return nil;
+            return nil
         }
     }
 }

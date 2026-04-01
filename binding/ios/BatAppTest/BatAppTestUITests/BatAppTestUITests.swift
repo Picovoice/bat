@@ -29,7 +29,7 @@ struct LanguageTest: Decodable {
     var models: [String]
     var audio_file: String
     var voice_threshold: Float
-    var expected_scores: [String:Float]
+    var expected_scores: [String: Float]
 }
 
 class BatDemoUITests: XCTestCase {
@@ -40,14 +40,14 @@ class BatDemoUITests: XCTestCase {
         continueAfterFailure = true
     }
 
-    func processFile(bat: Bat, fileURL: URL) throws -> [BatLanguage:Float32]? {
+    func processFile(bat: Bat, fileURL: URL) throws -> [BatLanguage: Float32]? {
         let data = try Data(contentsOf: fileURL)
         let frameLengthBytes = Int(Bat.frameLength) * 2
 
         var pcmBuffer = [Int16](repeating: 0, count: Int(Bat.frameLength))
 
         var index = 0
-        var scores: [BatLanguage:Float32]? = nil
+        var scores: [BatLanguage: Float32]?
         while index + frameLengthBytes < data.count {
             _ = pcmBuffer.withUnsafeMutableBytes { data.copyBytes(to: $0, from: index..<(index + frameLengthBytes)) }
             scores = try bat.process(pcmBuffer)
@@ -61,7 +61,7 @@ class BatDemoUITests: XCTestCase {
             modelPath: String,
             testAudio: String,
             voiceThreshold: Float,
-            expectedScores: [String:Float]
+            expectedScores: [String: Float]
         ) throws {
         let bundle = Bundle(for: type(of: self))
         let audioFileURL: URL = bundle.url(
