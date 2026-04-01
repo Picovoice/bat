@@ -1,0 +1,105 @@
+import groovy.json.JsonSlurper
+
+apply plugin: 'com.android.application'
+
+Properties properties = new Properties()
+if (rootProject.file("local.properties").exists()) {
+    properties.load(rootProject.file("local.properties").newDataInputStream())
+    if (project.hasProperty("storePassword")) {
+        properties.put("storePassword", project.getProperty("storePassword"))
+    }
+    if (project.hasProperty("storeFile")) {
+        properties.put("storeFile", project.getProperty("storeFile"))
+    }
+    if (project.hasProperty("keyAlias")) {
+        properties.put("keyAlias", project.getProperty("keyAlias"))
+    }
+    if (project.hasProperty("keyPassword")) {
+        properties.put("keyPassword", project.getProperty("keyPassword"))
+    }
+}
+
+android {
+    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+    compileSdkVersion defaultTargetSdkVersion
+
+    defaultConfig {
+        applicationId "ai.picovoice.batdemo"
+        minSdkVersion 21
+        targetSdkVersion defaultTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        release {
+            storePassword properties.getProperty("storePassword")
+            storeFile file(properties.getProperty("storeFile", ".dummy.jks"))
+            keyAlias properties.getProperty("keyAlias")
+            keyPassword properties.getProperty("keyPassword")
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    buildFeatures {
+        buildConfig true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        abortOnError false
+    }
+    if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
+        namespace 'ai.picovoice.batdemo'
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'ai.picovoice:android-voice-processor:1.0.2'
+    // implementation 'ai.picovoice:bat-android:1.0.0'
+    implementation files("../../../../binding/android/Bat/bat/build/outputs/aar/bat-release.aar")
+}
+
+afterEvaluate {
+    android.productFlavors.all {
+        flavor ->
+            tasks."merge${flavor.name.capitalize()}DebugAssets".dependsOn "${flavor.name}CopyParams"
+            tasks."merge${flavor.name.capitalize()}ReleaseAssets".dependsOn "${flavor.name}CopyParams"
+
+            def generateDebugLintReportModelTask = tasks.findByName(
+                    "generate${flavor.name.capitalize()}DebugLintReportModel")
+            if (generateDebugLintReportModelTask) {
+                generateDebugLintReportModelTask.dependsOn "${flavor.name}CopyParams"
+            }
+
+            def generateReleaseLintVitalReportModelTask = tasks.findByName(
+                    "generate${flavor.name.capitalize()}ReleaseLintVitalReportModel")
+            if (generateReleaseLintVitalReportModelTask) {
+                generateReleaseLintVitalReportModelTask.dependsOn "${flavor.name}CopyParams"
+            }
+
+            def lintAnalyzeDebugTask = tasks.findByName(
+                    "lintAnalyze${flavor.name.capitalize()}Debug")
+            if (lintAnalyzeDebugTask) {
+                lintAnalyzeDebugTask.dependsOn "${flavor.name}CopyParams"
+            }
+
+            def lintVitalAnalyzeReleaseTask = tasks.findByName(
+                    "lintVitalAnalyze${flavor.name.capitalize()}Release")
+            if (lintVitalAnalyzeReleaseTask) {
+                lintVitalAnalyzeReleaseTask.dependsOn "${flavor.name}CopyParams"
+            }
+    }
+}
