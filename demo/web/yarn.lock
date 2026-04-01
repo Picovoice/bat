@@ -96,8 +96,10 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/retry/-/retry-0.4.2.tgz#1860473de7dfa1546767448f333db80cb0ff2161"
   integrity sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==
 
-"@picovoice/bat-web@file:../../binding/web":
+"@picovoice/bat-web@1.0.0":
   version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@picovoice/bat-web/-/bat-web-1.0.0.tgz#375ae744ce4c0cd300e6748fd12d8bd9335ffc77"
+  integrity sha512-9UkLO0ieiwpm/x/qT9yBN3R2gNEVgIgwo0XW/WI4aGVq+XmrmVb97wrGTcOtBVSCCyD0Vbs5SzLhcYI5TZfb9Q==
   dependencies:
     "@picovoice/web-utils" "=1.4.3"
 
