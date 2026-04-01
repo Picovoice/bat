@@ -120,7 +120,7 @@ const batModel = {
 #### Init options
 
 Set a `voiceThreshold` value if you wish to change the default value.
-Set `processErrorCallback` to handle errors if an error occurs while transcribing.
+Set `processErrorCallback` to handle errors if an error occurs while processing.
 
 ```typescript
 // Optional, these are default
