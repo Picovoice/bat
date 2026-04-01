@@ -100,7 +100,7 @@ public class LanguageTests extends BaseTest {
     }
 
     @Test
-    public void testTranscribe() throws Exception {
+    public void testProcess() throws Exception {
         String modelPath = getModelFilepath(modelFile);
         Bat bat = new Bat.Builder()
                 .setAccessKey(accessKey)

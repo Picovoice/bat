@@ -192,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
         audioInputStream.skip(44);
 
-        StringBuilder partialTranscript = new StringBuilder();
         HashMap<BatLanguages, Float> batScores = null;
 
         while (audioInputStream.available() > 0) {

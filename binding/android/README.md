@@ -4,7 +4,7 @@
 
 Made in Vancouver, Canada by [Picovoice](https://picovoice.ai)
 
-Bat is an on-device speech-to-text engine. Bat is:
+Bat is an on-device spoken language understanding engine. Bat is:
 
 - Private; All voice processing runs locally.
 - Cross-Platform:

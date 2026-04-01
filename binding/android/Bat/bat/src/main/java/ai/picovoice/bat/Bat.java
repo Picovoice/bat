@@ -113,13 +113,13 @@ public class Bat {
     }
 
     /**
-     * Processes given audio data and returns its transcription.
+     * Processes given audio data and returns language detection scores.
      *
      * @param pcm A frame of audio samples. The number of samples per frame can be attained by
      *            calling {@link #getFrameLength()}. The incoming audio needs to have a sample rate
      *            equal to {@link #getSampleRate()} and be 16-bit linearly-encoded. Furthermore,
      *            Bat operates on single channel audio only.
-     * @return Inferred transcription.
+     * @return Inferred Language detection scores.
      * @throws BatException if there is an error while processing the audio frame.
      */
     public HashMap<BatLanguages, Float> process(short[] pcm) throws BatException {
