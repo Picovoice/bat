@@ -1,0 +1,35 @@
+name: iOS Demos
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'demo/ios/BatDemo/**'
+      - '.github/workflows/ios-demos.yml'
+  pull_request:
+    branches: [ main, 'v[0-9]+.[0-9]+', 'v[0-9]+.[0-9]+-.+', 'v[0-9]+.[0-9]+.[0-9]+', 'v[0-9]+.[0-9]+.[0-9]+-.+' ]
+    paths:
+      - 'demo/ios/BatDemo/**'
+      - '.github/workflows/ios-demos.yml'
+
+defaults:
+  run:
+    working-directory: demo/ios/BatDemo
+
+jobs:
+  build:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build
+        run: xcrun xcodebuild build
+          -configuration Debug
+          -project BatDemo.xcodeproj
+          -sdk iphoneos
+          -scheme BatDemo
+          -derivedDataPath ddp
+          CODE_SIGNING_ALLOWED=NO
