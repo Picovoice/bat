@@ -1,0 +1,2 @@
+-keep class ai.picovoice.bat.*Exception { <init>(...); }
+-keep class ai.picovoice.bat.BatLanguages { <init>(...); }
