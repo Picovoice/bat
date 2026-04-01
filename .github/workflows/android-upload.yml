@@ -48,7 +48,7 @@ jobs:
       run: |
         VC=`fastlane run google_play_track_version_codes \
           json_key:"./service-account.json" \
-          package_name:"ai.picovoice.batdemo.en" \
+          package_name:"ai.picovoice.batdemo" \
           track:"internal" \
         | grep -oP '(?<=Result: \[)\d+(?=\])' \
         | awk '{print $1+1}'`
@@ -66,4 +66,4 @@ jobs:
       run: ./gradlew bundleRelease
 
     - name: Upload to Google Play
-      run: fastlane supply --json_key ./service-account.json --package_name ai.picovoice.batdemo.en --aab bat-demo-app/build/outputs/bundle/enRelease/bat-demo-app-en-release.aab --track internal --skip_upload_metadata --skip_upload_images --skip_upload_screenshots --release_status draft
+      run: fastlane supply --json_key ./service-account.json --package_name ai.picovoice.batdemo --aab bat-demo-app/build/outputs/bundle/release/bat-demo-app-release.aab --track internal --skip_upload_metadata --skip_upload_images --skip_upload_screenshots --release_status draft
