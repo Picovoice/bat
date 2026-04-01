@@ -83,7 +83,7 @@ class BatDemoUITests: XCTestCase {
         }
     }
 
-    func testTranscribe() throws {
+    func testProcess() throws {
         let bundle = Bundle(for: type(of: self))
         let testDataJsonUrl = bundle.url(
             forResource: "test_data",

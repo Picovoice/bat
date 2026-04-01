@@ -125,9 +125,6 @@ public class Bat {
     /// - Parameters:
     ///   - accessKey: The AccessKey obtained from Picovoice Console (https://console.picovoice.ai).
     ///   - modelURL: URL to file containing model parameters.
-    ///   - endpointDuration: Duration of endpoint in seconds. A speech endpoint is detected when there is a
-    ///     chunk of audio (with a duration specified herein) after an utterance without any speech in it.
-    ///     Set duration to 0 to disable this. Default is 1 second.
     ///   - device: String representation of the device (e.g., CPU or GPU) to use. If set to `best`, the most
     ///     suitable device is selected automatically. If set to `gpu`, the engine uses the first available GPU
     ///     device. To select a specific GPU device, set this argument to `gpu:${GPU_INDEX}`, where `${GPU_INDEX}`

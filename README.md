@@ -192,7 +192,7 @@ The Bat iOS binding is available via [CocoaPods](https://cocoapods.org/pods/Bat-
 pod 'Bat-iOS'
 ```
 
-Create an instance of the engine and transcribe audio in real-time:
+Create an instance of the engine and detect spoken language:
 
 ```swift
 import Bat

@@ -1,6 +1,6 @@
 # Bat Binding for iOS
 
-## Bat Speech-to-Text Engine
+## Bat Spoken Language Understanding Engine
 
 Made in Vancouver, Canada by [Picovoice](https://picovoice.ai)
 

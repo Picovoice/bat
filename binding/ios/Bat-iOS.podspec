@@ -3,10 +3,10 @@ Pod::Spec.new do |s|
   s.module_name = 'Bat'
   s.version = '1.0.0'
   s.license = {:type => 'Apache 2.0'}
-  s.summary = 'iOS SDK for Picovoice\'s Bat speech-to-text engine.'
+  s.summary = 'iOS SDK for Picovoice\'s Bat spoken language understanding engine.'
   s.description =
   <<-DESC
-  Bat is an on-device streaming speech-to-text engine.
+  Bat is an on-device streaming spoken language understanding engine.
 
   Bat is:
     - Private, all voice processing runs locally.
