@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0742BA0C2F7DC4120084B9D5 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 0742BA0B2F7DC4120084B9D5 /* Bat */; };
+		0758406C2F842CD9006C57EB /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 0758406B2F842CD9006C57EB /* Bat */; };
 		076CC4872E15FEAA004995F2 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 076CC4862E15FEAA004995F2 /* Bat */; };
+		07A299012F84385900624AF5 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 07A299002F84385900624AF5 /* Bat */; };
 		32769079E5BC2BA141FA659F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327695EA9D71F6A29C6D079A /* ViewModel.swift */; };
 		3276967434C9CEBD0AF09237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 327694975368499C3B7946DD /* Assets.xcassets */; };
 		327698EADFD16D8F70823520 /* BatDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327697358B823E5B2EF0FA8C /* BatDemoApp.swift */; };
@@ -38,12 +40,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07A299012F84385900624AF5 /* Bat in Frameworks */,
 				5A62A1812EF1ED5C00D483BE /* Bat in Frameworks */,
 				5A7E79982EF352B800148C4F /* Bat in Frameworks */,
 				E15A377F2CF7B8ED00A96F85 /* Bat in Frameworks */,
 				5AEC741E2F6B745B004AD1C0 /* Bat in Frameworks */,
 				076CC4872E15FEAA004995F2 /* Bat in Frameworks */,
 				0742BA0C2F7DC4120084B9D5 /* Bat in Frameworks */,
+				0758406C2F842CD9006C57EB /* Bat in Frameworks */,
 				E1E0C80B2CF12778001D6D84 /* ios_voice_processor in Frameworks */,
 				E1B3E5A12E61000900915974 /* Bat in Frameworks */,
 				5A06372E2F62191D0037D526 /* Bat in Frameworks */,
@@ -122,7 +126,7 @@
 			mainGroup = 327692BCE8C735F3534C318E;
 			packageReferences = (
 				E1E0C8092CF12777001D6D84 /* XCRemoteSwiftPackageReference "ios-voice-processor" */,
-				0742BA0A2F7DC4120084B9D5 /* XCRemoteSwiftPackageReference "bat" */,
+				07A298FF2F84385900624AF5 /* XCRemoteSwiftPackageReference "bat" */,
 			);
 			productRefGroup = 32769B87809678D96B1C6C55 /* Products */;
 			projectDirPath = "";
@@ -384,6 +388,14 @@
 				version = 2.2.0;
 			};
 		};
+		07A298FF2F84385900624AF5 /* XCRemoteSwiftPackageReference "bat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Picovoice/bat";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.1;
+			};
+		};
 		5A7E79962EF352B800148C4F /* XCRemoteSwiftPackageReference "bat" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Picovoice/bat";
@@ -432,9 +444,18 @@
 			package = 0742BA0A2F7DC4120084B9D5 /* XCRemoteSwiftPackageReference "bat" */;
 			productName = Bat;
 		};
+		0758406B2F842CD9006C57EB /* Bat */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Bat;
+		};
 		076CC4862E15FEAA004995F2 /* Bat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 076CC4852E15FEAA004995F2 /* XCRemoteSwiftPackageReference "bat" */;
+			productName = Bat;
+		};
+		07A299002F84385900624AF5 /* Bat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07A298FF2F84385900624AF5 /* XCRemoteSwiftPackageReference "bat" */;
 			productName = Bat;
 		};
 		5A06372D2F62191D0037D526 /* Bat */ = {

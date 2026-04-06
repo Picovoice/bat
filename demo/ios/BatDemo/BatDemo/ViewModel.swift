@@ -117,7 +117,7 @@ class ViewModel: ObservableObject {
                     sampleRate: Bat.sampleRate
             )
 
-            for language in BatLanguage.allCases {
+            for language in BatLanguages.allCases {
                 scoresResult[language.toString()] = 0.0
             }
             scoresMessage = ""

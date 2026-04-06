@@ -1,10 +1,10 @@
-# Bat Spoken Language Understanding Demos
+# Bat Spoken Language Identification Demos
 
 Made in Vancouver, Canada by [Picovoice](https://picovoice.ai)
 
 ## Bat
 
-Bat is an on-device spoken language understanding engine. Bat is:
+Bat is an on-device spoken language identification engine. Bat is:
 
 - Private; All voice processing runs locally.
 - Cross-Platform:

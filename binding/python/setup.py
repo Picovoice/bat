@@ -48,10 +48,10 @@ with open(os.path.join(os.path.dirname(__file__), 'README.md'), 'r') as f:
 
 setuptools.setup(
     name="pvbat",
-    version="1.0.0",
+    version="1.0.1",
     author="Picovoice",
     author_email="hello@picovoice.ai",
-    description="Bat Spoken Language Understanding Engine.",
+    description="Bat Spoken Language Identification Engine.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Picovoice/bat",
@@ -66,5 +66,5 @@ setuptools.setup(
         "Topic :: Multimedia :: Sound/Audio :: Speech"
     ],
     python_requires='>=3.9',
-    keywords="Spoken Language Understanding, Language Detection, Speech Recognition, Voice Recognition",
+    keywords="Spoken Language Identification, Language Detection, Speech Recognition, Voice Recognition",
 )

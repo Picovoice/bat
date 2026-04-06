@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 /**
- * Forward declaration for Bat Spoken Language Understanding engine.
+ * Forward declaration for Bat Spoken Language Identification engine.
  * Bat processes consecutive frames of incoming audio, outputting a detection score for each supported language per frame.
  */
 typedef struct pv_bat pv_bat_t;

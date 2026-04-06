@@ -117,7 +117,7 @@ export class BatWorker {
   }
 
   /**
-   * Creates a worker instance of the Picovoice Bat Spoken Language Understanding engine.
+   * Creates a worker instance of the Picovoice Bat Spoken Language Identification engine.
    * Behind the scenes, it requires the WebAssembly code to load and initialize before
    * it can create an instance.
    *

@@ -23,7 +23,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 
 /**
- * Android binding for Bat spoken language understanding engine.
+ * Android binding for Bat spoken language identification engine.
  */
 public class Bat {
 
@@ -246,7 +246,7 @@ public class Bat {
         }
 
         /**
-         * Validates properties and creates an instance of the Bat spoken language understanding engine.
+         * Validates properties and creates an instance of the Bat spoken language identification engine.
          *
          * @return An instance of Bat Engine
          * @throws BatException if there is an error while initializing Bat.

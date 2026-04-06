@@ -30,11 +30,11 @@ def print_scores_bar(language, score):
 def print_scores(scores):
     global FIRST_PRINT
     if not FIRST_PRINT:
-        num_lines = len(pvbat.Bat.BatLanguages) + 2
+        num_lines = len(pvbat.BatLanguages) + 2
         for _ in range(num_lines):
             sys.stdout.write("\x1b[1A\x1b[2K")
 
-    for language in pvbat.Bat.BatLanguages:
+    for language in pvbat.BatLanguages:
         print_scores_bar(language, scores[language] if scores else 0.0)
     if (scores):
         sys.stdout.write("\n")
