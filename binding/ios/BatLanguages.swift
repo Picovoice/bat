@@ -9,7 +9,7 @@
 
 import PvBat
 
-public enum BatLanguage: Int, CaseIterable {
+public enum BatLanguages: Int, CaseIterable {
     case UNKNOWN = 0
     case DE = 1
     case EN = 2
@@ -21,7 +21,7 @@ public enum BatLanguage: Int, CaseIterable {
     case PT = 8
 }
 
-extension BatLanguage {
+extension BatLanguages {
     public static func numLanguages() -> Int {
         return Int(PV_BAT_LANGUAGE_NUM_LANGUAGES)
     }
@@ -49,26 +49,26 @@ extension BatLanguage {
         }
     }
 
-    public static func fromString(_ language: String) -> BatLanguage? {
+    public static func fromString(_ language: String) -> BatLanguages? {
         switch language.lowercased() {
         case "unknown":
-            return BatLanguage.UNKNOWN
+            return BatLanguages.UNKNOWN
         case "de":
-            return BatLanguage.DE
+            return BatLanguages.DE
         case "en":
-            return BatLanguage.EN
+            return BatLanguages.EN
         case "es":
-            return BatLanguage.ES
+            return BatLanguages.ES
         case "fr":
-            return BatLanguage.FR
+            return BatLanguages.FR
         case "it":
-            return BatLanguage.IT
+            return BatLanguages.IT
         case "ja":
-            return BatLanguage.JA
+            return BatLanguages.JA
         case "ko":
-            return BatLanguage.KO
+            return BatLanguages.KO
         case "pt":
-            return BatLanguage.PT
+            return BatLanguages.PT
         default:
             return nil
         }

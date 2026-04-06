@@ -11,7 +11,7 @@ import Foundation
 
 import PvBat
 
-/// iOS binding for Bat spoken language understanding engine. Provides a Swift interface to the Bat library.
+/// iOS binding for Bat spoken language identification engine. Provides a Swift interface to the Bat library.
 public class Bat {
 
 #if SWIFT_PACKAGE
@@ -164,9 +164,9 @@ public class Bat {
     /// - Throws: BatError
     /// - Returns: Detection score for each supported language. The scores are in the range [0, 1]
     ///            with 1 being maximum confidence in a detection. The index of each scores corresponds
-    ///            to the `BatLanguage` enum value, and the length of the array is `BatLanguage.numLanguages()`
+    ///            to the `BatLanguages` enum value, and the length of the array is `BatLanguages.numLanguages()`
     ///            elements long. If `nil` is returned, Bat did not detect usable voice in the frame.
-    public func process(_ pcm: [Int16]) throws -> [BatLanguage: Float32]? {
+    public func process(_ pcm: [Int16]) throws -> [BatLanguages: Float32]? {
         if handle == nil {
             throw BatInvalidStateError("Bat must be initialized before processing")
         }
@@ -185,9 +185,9 @@ public class Bat {
         }
 
         if cScores != nil {
-            var scores: [BatLanguage: Float32] = [:]
-            for i in 0..<BatLanguage.numLanguages() {
-                let language = BatLanguage(rawValue: Int(i)) ?? BatLanguage.UNKNOWN
+            var scores: [BatLanguages: Float32] = [:]
+            for i in 0..<BatLanguages.numLanguages() {
+                let language = BatLanguages(rawValue: Int(i)) ?? BatLanguages.UNKNOWN
                 scores[language] = cScores![Int(i)]
             }
             pv_bat_scores_delete(cScores)

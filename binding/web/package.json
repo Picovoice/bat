@@ -1,6 +1,6 @@
 {
   "name": "@picovoice/bat-web",
-  "description": "Bat spoken language understanding engine for web browsers (via WebAssembly)",
+  "description": "Bat spoken language identification engine for web browsers (via WebAssembly)",
   "author": "Picovoice Inc",
   "license": "Apache-2.0",
   "version": "1.0.0",

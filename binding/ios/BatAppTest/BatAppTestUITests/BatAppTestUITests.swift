@@ -40,14 +40,14 @@ class BatDemoUITests: XCTestCase {
         continueAfterFailure = true
     }
 
-    func processFile(bat: Bat, fileURL: URL) throws -> [BatLanguage: Float32]? {
+    func processFile(bat: Bat, fileURL: URL) throws -> [BatLanguages: Float32]? {
         let data = try Data(contentsOf: fileURL)
         let frameLengthBytes = Int(Bat.frameLength) * 2
 
         var pcmBuffer = [Int16](repeating: 0, count: Int(Bat.frameLength))
 
         var index = 0
-        var scores: [BatLanguage: Float32]?
+        var scores: [BatLanguages: Float32]?
         while index + frameLengthBytes < data.count {
             _ = pcmBuffer.withUnsafeMutableBytes { data.copyBytes(to: $0, from: index..<(index + frameLengthBytes)) }
             scores = try bat.process(pcmBuffer)
@@ -79,7 +79,7 @@ class BatDemoUITests: XCTestCase {
         bat.delete()
 
         for language in expectedScores.keys {
-            XCTAssert(abs(res![BatLanguage.fromString(language)!]! - expectedScores[language]!) < 0.05)
+            XCTAssert(abs(res![BatLanguages.fromString(language)!]! - expectedScores[language]!) < 0.05)
         }
     }
 

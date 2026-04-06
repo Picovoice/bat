@@ -19,6 +19,7 @@ from parameterized import parameterized
 
 from _bat import (
     Bat,
+    BatLanguages,
     BatError,
     list_hardware_devices
 )
@@ -78,7 +79,7 @@ class BatTestCase(unittest.TestCase):
                 scores[k] = scores[k] / num_frames
 
             for language_str, expected_score in expected_scores.items():
-                language = Bat.BatLanguages.from_str(language_str)
+                language = BatLanguages.from_str(language_str)
                 self.assertAlmostEqual(
                     scores[language],
                     expected_score,

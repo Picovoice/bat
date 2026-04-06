@@ -13,7 +13,7 @@ Made in Vancouver, Canada by [Picovoice](https://picovoice.ai)
 [![Twitter URL](https://img.shields.io/twitter/url?label=%40AiPicovoice&style=social&url=https%3A%2F%2Ftwitter.com%2FAiPicovoice)](https://twitter.com/AiPicovoice)<!-- markdown-link-check-disable-line -->
 [![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCAdi9sTCXLosG1XeqDwLx7w?label=YouTube&style=social)](https://www.youtube.com/channel/UCAdi9sTCXLosG1XeqDwLx7w)
 
-Bat is an on-device spoken language understanding engine. Bat is:
+Bat is an on-device spoken language identification engine. Bat is:
 
 - Private; All voice processing runs locally.
 - Cross-Platform:
@@ -55,7 +55,7 @@ AccessKey also verifies that your usage is within the limits of your account. Yo
 
 ## Language Support
 
-- Bat spoken language understanding currently supports English, French, Spanish, Italian, German, Portuguese, Japanese, and Korean.
+- Bat spoken language identification currently supports English, French, Spanish, Italian, German, Portuguese, Japanese, and Korean.
 
 ## Demos
 

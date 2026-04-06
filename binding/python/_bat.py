@@ -83,8 +83,51 @@ class BatActivationRefusedError(BatError):
     pass
 
 
+class BatLanguages(Enum):
+    UNKNOWN = 0
+    DE = 1
+    EN = 2
+    ES = 3
+    FR = 4
+    IT = 5
+    JA = 6
+    KO = 7
+    PT = 8
+
+    @staticmethod
+    def num() -> int:
+        return 9
+
+    @classmethod
+    def from_str(cls, str: str) -> str:
+        return {
+            "unknown": cls.UNKNOWN,
+            "de": cls.DE,
+            "en": cls.EN,
+            "es": cls.ES,
+            "fr": cls.FR,
+            "it": cls.IT,
+            "ja": cls.JA,
+            "ko": cls.KO,
+            "pt": cls.PT,
+        }[str]
+
+    def __str__(self) -> str:
+        return {
+            self.UNKNOWN: "unknown",
+            self.DE: "de",
+            self.EN: "en",
+            self.ES: "es",
+            self.FR: "fr",
+            self.IT: "it",
+            self.JA: "ja",
+            self.KO: "ko",
+            self.PT: "pt",
+        }[self]
+
+
 class Bat(object):
-    """Python binding for Bat spoken language understanding engine."""
+    """Python binding for Bat spoken language identification engine."""
 
     class PicovoiceStatuses(Enum):
         SUCCESS = 0
@@ -113,48 +156,6 @@ class Bat(object):
         PicovoiceStatuses.ACTIVATION_THROTTLED: BatActivationThrottledError,
         PicovoiceStatuses.ACTIVATION_REFUSED: BatActivationRefusedError
     }
-
-    class BatLanguages(Enum):
-        UNKNOWN = 0
-        DE = 1
-        EN = 2
-        ES = 3
-        FR = 4
-        IT = 5
-        JA = 6
-        KO = 7
-        PT = 8
-
-        @staticmethod
-        def num() -> int:
-            return 9
-
-        @classmethod
-        def from_str(cls, str: str) -> str:
-            return {
-                "unknown": cls.UNKNOWN,
-                "de": cls.DE,
-                "en": cls.EN,
-                "es": cls.ES,
-                "fr": cls.FR,
-                "it": cls.IT,
-                "ja": cls.JA,
-                "ko": cls.KO,
-                "pt": cls.PT,
-            }[str]
-
-        def __str__(self) -> str:
-            return {
-                self.UNKNOWN: "unknown",
-                self.DE: "de",
-                self.EN: "en",
-                self.ES: "es",
-                self.FR: "fr",
-                self.IT: "it",
-                self.JA: "ja",
-                self.KO: "ko",
-                self.PT: "pt",
-            }[self]
 
     class CBat(Structure):
         pass
@@ -257,7 +258,7 @@ class Bat(object):
 
         self._frame_length = library.pv_bat_frame_length()
 
-    def process(self, pcm: Sequence[int]) -> Optional[Dict[BatLanguages, float]]:
+    def process(self, pcm: Sequence[int]) -> Optional[Dict[Languages, float]]:
         """
         Processes a frame of audio and returns detection scores for each supported language.
 
@@ -286,8 +287,8 @@ class Bat(object):
 
         if c_scores:
             scores = dict()
-            for x in range(self.BatLanguages.num()):
-                scores[self.BatLanguages(x)] = c_scores[x]
+            for x in range(self.Languages.num()):
+                scores[self.Languages(x)] = c_scores[x]
             self._scores_delete_func(c_scores)
             return scores
 
@@ -363,6 +364,7 @@ def list_hardware_devices(library_path: str) -> Sequence[str]:
 
 __all__ = [
     'Bat',
+    'BatLanguages',
     'BatActivationError',
     'BatActivationLimitError',
     'BatActivationRefusedError',

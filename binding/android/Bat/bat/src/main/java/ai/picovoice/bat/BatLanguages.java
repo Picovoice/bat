@@ -14,7 +14,7 @@
 package ai.picovoice.bat;
 
 /**
- * Bat spoken language understanding engine Languages Object.
+ * Bat spoken language identification engine Languages Object.
  */
 public enum BatLanguages {
     UNKNOWN(0),

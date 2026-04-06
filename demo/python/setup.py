@@ -34,7 +34,7 @@ setuptools.setup(
     version="1.0.0",
     author="Picovoice",
     author_email="hello@picovoice.ai",
-    description="Bat spoken language understanding engine demos",
+    description="Bat spoken language identification engine demos",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/Picovoice/bat",
@@ -56,5 +56,5 @@ setuptools.setup(
         ],
     ),
     python_requires='>=3.9',
-    keywords="Spoken Language Understanding, Language Detection, Speech Recognition, Voice Recognition",
+    keywords="Spoken Language Identification, Language Detection, Speech Recognition, Voice Recognition",
 )

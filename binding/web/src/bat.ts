@@ -225,7 +225,7 @@ export class Bat {
   }
 
   /**
-   * Creates an instance of the Picovoice Bat spoken language understanding engine.
+   * Creates an instance of the Picovoice Bat spoken language identification engine.
    * Behind the scenes, it requires the WebAssembly code to load and initialize before
    * it can create an instance.
    *

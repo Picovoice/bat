@@ -27,7 +27,7 @@ let package = Package(
             sources: [
                 "binding/ios/Bat.swift",
                 "binding/ios/BatErrors.swift",
-                "binding/ios/BatLanguage.swift"
+                "binding/ios/BatLanguages.swift"
             ],
             resources: [
                .copy("lib/common/bat_params.pv")
