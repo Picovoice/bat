@@ -3,11 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0742BA0C2F7DC4120084B9D5 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 0742BA0B2F7DC4120084B9D5 /* Bat */; };
+		0758406C2F842CD9006C57EB /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 0758406B2F842CD9006C57EB /* Bat */; };
 		076CC4872E15FEAA004995F2 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 076CC4862E15FEAA004995F2 /* Bat */; };
 		32769079E5BC2BA141FA659F /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327695EA9D71F6A29C6D079A /* ViewModel.swift */; };
 		3276967434C9CEBD0AF09237 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 327694975368499C3B7946DD /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 				5AEC741E2F6B745B004AD1C0 /* Bat in Frameworks */,
 				076CC4872E15FEAA004995F2 /* Bat in Frameworks */,
 				0742BA0C2F7DC4120084B9D5 /* Bat in Frameworks */,
+				0758406C2F842CD9006C57EB /* Bat in Frameworks */,
 				E1E0C80B2CF12778001D6D84 /* ios_voice_processor in Frameworks */,
 				E1B3E5A12E61000900915974 /* Bat in Frameworks */,
 				5A06372E2F62191D0037D526 /* Bat in Frameworks */,
@@ -122,7 +124,7 @@
 			mainGroup = 327692BCE8C735F3534C318E;
 			packageReferences = (
 				E1E0C8092CF12777001D6D84 /* XCRemoteSwiftPackageReference "ios-voice-processor" */,
-				0742BA0A2F7DC4120084B9D5 /* XCRemoteSwiftPackageReference "bat" */,
+				0758406A2F842CD9006C57EB /* XCLocalSwiftPackageReference "../../../../bat" */,
 			);
 			productRefGroup = 32769B87809678D96B1C6C55 /* Products */;
 			projectDirPath = "";
@@ -367,6 +369,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		0758406A2F842CD9006C57EB /* XCLocalSwiftPackageReference "../../../../bat" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../../bat;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		0742BA0A2F7DC4120084B9D5 /* XCRemoteSwiftPackageReference "bat" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -430,6 +439,10 @@
 		0742BA0B2F7DC4120084B9D5 /* Bat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0742BA0A2F7DC4120084B9D5 /* XCRemoteSwiftPackageReference "bat" */;
+			productName = Bat;
+		};
+		0758406B2F842CD9006C57EB /* Bat */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = Bat;
 		};
 		076CC4862E15FEAA004995F2 /* Bat */ = {
