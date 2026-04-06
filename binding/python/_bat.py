@@ -258,7 +258,7 @@ class Bat(object):
 
         self._frame_length = library.pv_bat_frame_length()
 
-    def process(self, pcm: Sequence[int]) -> Optional[Dict[Languages, float]]:
+    def process(self, pcm: Sequence[int]) -> Optional[Dict[BatLanguages, float]]:
         """
         Processes a frame of audio and returns detection scores for each supported language.
 
@@ -287,8 +287,8 @@ class Bat(object):
 
         if c_scores:
             scores = dict()
-            for x in range(self.Languages.num()):
-                scores[self.Languages(x)] = c_scores[x]
+            for x in range(BatLanguages.num()):
+                scores[BatLanguages(x)] = c_scores[x]
             self._scores_delete_func(c_scores)
             return scores
 
