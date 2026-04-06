@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,7 @@
 		0742BA092F7DC33E0084B9D5 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 0742BA082F7DC33E0084B9D5 /* Bat */; };
 		075840692F842CC5006C57EB /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 075840682F842CC5006C57EB /* Bat */; };
 		076CC4842E15FB93004995F2 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 076CC4832E15FB93004995F2 /* Bat */; };
+		07A299042F8439DC00624AF5 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 07A299032F8439DC00624AF5 /* Bat */; };
 		1E00655827CFF7EB006FF6E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00655727CFF7EB006FF6E9 /* AppDelegate.swift */; };
 		1E00655C27CFF7EB006FF6E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00655B27CFF7EB006FF6E9 /* ViewController.swift */; };
 		1E00655F27CFF7EB006FF6E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E00655D27CFF7EB006FF6E9 /* Main.storyboard */; };
@@ -83,6 +84,7 @@
 			files = (
 				0742BA092F7DC33E0084B9D5 /* Bat in Frameworks */,
 				076CC4842E15FB93004995F2 /* Bat in Frameworks */,
+				07A299042F8439DC00624AF5 /* Bat in Frameworks */,
 				075840692F842CC5006C57EB /* Bat in Frameworks */,
 				5A1C386D2EE8DA7900FEF522 /* Bat in Frameworks */,
 			);
@@ -297,7 +299,7 @@
 			);
 			mainGroup = 1E00654B27CFF7EB006FF6E9;
 			packageReferences = (
-				075840672F842CC5006C57EB /* XCLocalSwiftPackageReference "../../../../bat" */,
+				07A299022F8439DC00624AF5 /* XCRemoteSwiftPackageReference "bat" */,
 			);
 			productRefGroup = 1E00655527CFF7EB006FF6E9 /* Products */;
 			projectDirPath = "";
@@ -710,10 +712,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		075840672F842CC5006C57EB /* XCLocalSwiftPackageReference "../../../../bat" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../../bat;
-		};
 		E1E0C7FE2CF11FD9001D6D84 /* XCLocalSwiftPackageReference "../../../../bat" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../../../bat;
@@ -737,6 +735,14 @@
 				version = 2.2.0;
 			};
 		};
+		07A299022F8439DC00624AF5 /* XCRemoteSwiftPackageReference "bat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Picovoice/bat";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -752,6 +758,11 @@
 		076CC4832E15FB93004995F2 /* Bat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 076CC4822E15FB93004995F2 /* XCRemoteSwiftPackageReference "bat" */;
+			productName = Bat;
+		};
+		07A299032F8439DC00624AF5 /* Bat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07A299022F8439DC00624AF5 /* XCRemoteSwiftPackageReference "bat" */;
 			productName = Bat;
 		};
 		5A0637302F6230890037D526 /* Bat */ = {
