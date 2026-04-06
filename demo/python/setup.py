@@ -31,7 +31,7 @@ with open(os.path.join(os.path.dirname(__file__), "requirements.txt"), "r") as f
 
 setuptools.setup(
     name="pvbatdemo",
-    version="1.0.0",
+    version="1.0.1",
     author="Picovoice",
     author_email="hello@picovoice.ai",
     description="Bat spoken language identification engine demos",
