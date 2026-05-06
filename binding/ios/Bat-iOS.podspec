@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name = 'Bat-iOS'
   s.module_name = 'Bat'
-  s.version = '1.0.1'
+  s.version = '1.0.2'
   s.license = {:type => 'Apache 2.0'}
   s.summary = 'iOS SDK for Picovoice\'s Bat spoken language identification engine.'
   s.description =
