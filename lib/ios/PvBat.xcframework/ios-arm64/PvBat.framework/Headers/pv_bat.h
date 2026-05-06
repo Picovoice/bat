@@ -23,7 +23,7 @@ extern "C" {
 #endif
 
 /**
- * Forward declaration for Bat Spoken Language Understanding engine.
+ * Forward declaration for Bat Spoken Language Identification engine.
  * Bat processes consecutive frames of incoming audio, outputting a detection score for each supported language per frame.
  */
 typedef struct pv_bat pv_bat_t;
@@ -68,7 +68,7 @@ PV_API void pv_bat_delete(pv_bat_t *object);
  * 16-bit linearly-encoded. Bat operates on single-channel audio.
  * @param[out] scores Detection score for each supported language. The scores are in the range [0, 1]
  * with 1 being maximum confidence in a detection. The index of each scores corresponds to the `pv_bat_language_t` enum value,
- * and the length of the array is `PV_BAT_LANGAUGE_NUM_LANGUAGES` elements long.
+ * and the length of the array is `PV_BAT_LANGUAGE_NUM_LANGUAGES` elements long.
  * If `NULL` is returned for `scores` and the return status `PV_STATUS_SUCCESS`, Bat did not detect usable voice
  * in the frame. `scores` must be freed using `pv_bat_scores_delete()`.
  * @return Status code. Returns `PV_STATUS_OUT_OF_MEMORY`, `PV_STATUS_INVALID_ARGUMENT`,
@@ -116,7 +116,7 @@ typedef enum {
     PV_BAT_LANGUAGE_PT = 8,
 } pv_bat_language_t;
 
-#define PV_BAT_LANGAUGE_NUM_LANGUAGES (9)
+#define PV_BAT_LANGUAGE_NUM_LANGUAGES (9)
 
 /**
  * Get string representation given Bat language enum.
