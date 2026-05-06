@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,7 @@
 		075840692F842CC5006C57EB /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 075840682F842CC5006C57EB /* Bat */; };
 		076CC4842E15FB93004995F2 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 076CC4832E15FB93004995F2 /* Bat */; };
 		07A299042F8439DC00624AF5 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 07A299032F8439DC00624AF5 /* Bat */; };
+		07F714CB2FABC0BA006F9700 /* Bat in Frameworks */ = {isa = PBXBuildFile; productRef = 07F714CA2FABC0BA006F9700 /* Bat */; };
 		1E00655827CFF7EB006FF6E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00655727CFF7EB006FF6E9 /* AppDelegate.swift */; };
 		1E00655C27CFF7EB006FF6E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00655B27CFF7EB006FF6E9 /* ViewController.swift */; };
 		1E00655F27CFF7EB006FF6E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E00655D27CFF7EB006FF6E9 /* Main.storyboard */; };
@@ -82,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07F714CB2FABC0BA006F9700 /* Bat in Frameworks */,
 				0742BA092F7DC33E0084B9D5 /* Bat in Frameworks */,
 				076CC4842E15FB93004995F2 /* Bat in Frameworks */,
 				07A299042F8439DC00624AF5 /* Bat in Frameworks */,
@@ -299,7 +301,7 @@
 			);
 			mainGroup = 1E00654B27CFF7EB006FF6E9;
 			packageReferences = (
-				07A299022F8439DC00624AF5 /* XCRemoteSwiftPackageReference "bat" */,
+				07F714C92FABC0BA006F9700 /* XCLocalSwiftPackageReference "../../../../bat" */,
 			);
 			productRefGroup = 1E00655527CFF7EB006FF6E9 /* Products */;
 			projectDirPath = "";
@@ -712,6 +714,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		07F714C92FABC0BA006F9700 /* XCLocalSwiftPackageReference "../../../../bat" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../../../bat;
+		};
 		E1E0C7FE2CF11FD9001D6D84 /* XCLocalSwiftPackageReference "../../../../bat" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../../../bat;
@@ -763,6 +769,10 @@
 		07A299032F8439DC00624AF5 /* Bat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 07A299022F8439DC00624AF5 /* XCRemoteSwiftPackageReference "bat" */;
+			productName = Bat;
+		};
+		07F714CA2FABC0BA006F9700 /* Bat */ = {
+			isa = XCSwiftPackageProductDependency;
 			productName = Bat;
 		};
 		5A0637302F6230890037D526 /* Bat */ = {
