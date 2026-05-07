@@ -1,2 +1,2 @@
-pvbat==1.0.1
+pvbat==1.0.2
 pvrecorder==1.2.7
