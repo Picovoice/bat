@@ -102,3 +102,4 @@ xcodeproj
 xcuitest
 xcworkspace
 swiftlint
+XCTEST
